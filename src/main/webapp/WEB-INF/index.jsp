@@ -14,26 +14,46 @@
 
     <jsp:body>
 
-        <div>
-            <h2>Our Cool Site</h2>
+        <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4">
+                <div class="text-center">
 
-            <div style="margin-top: 3em;margin-bottom: 3em;">
-                Main page for this 2. semester start project used at cphbusiness.dk
+                    <h2>Our Cool Site</h2>
+
+                    <div style="margin-top: 3em;margin-bottom: 3em;">
+                        Main page for this 2. semester start project used at cphbusiness.dk
+                    </div>
+
+                    <div class="jumbotron">
+                        <h1 class="display-4">Hello, world!</h1>
+                        <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+                        <hr class="my-4">
+                        <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+                        <p class="lead">
+                            <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+                        </p>
+                    </div>
+
+
+                    <c:if test="${sessionScope.role == 'employee' }">
+                    <p style="font-size: larger">This is what you can do,
+                        since your are logged in as an employee</p>
+                    <p><a href="fc/employeepage">Employee Page</a>
+                        </c:if>
+
+                        <c:if test="${sessionScope.role == 'customer' }">
+                    <p style="font-size: larger">This is what you can do, since your
+                        are logged in as a customer</p>
+                    <p><a href="fc/customerpage">Customer Page</a>
+                        </c:if>
+
+                    <div class="col-sm-4"></div>
+
+                </div>
             </div>
-
-            <c:if test="${sessionScope.role == 'employee' }">
-                <p style="font-size: larger">This is what you can do,
-                    since your are logged in as an employee</p>
-                 <p><a href="fc/employeepage">Employee Page</a>
-             </c:if>
-
-             <c:if test="${sessionScope.role == 'customer' }">
-                <p style="font-size: larger">This is what you can do, since your
-                    are logged in as a customer</p>
-                <p><a href="fc/customerpage">Customer Page</a>
-            </c:if>
-
         </div>
+
 
     </jsp:body>
 </t:genericpage>
