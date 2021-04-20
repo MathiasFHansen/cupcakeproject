@@ -12,7 +12,7 @@
     <jsp:body>
         <h1>Hello ${sessionScope.email} </h1>
 
-        <div class="jumbotron">
+        <form method="post" action="${pageContext.request.contextPath}/fc/customerpage">
                 <div class="row">
                     <div class="form-group col-2"></div>
                     <div class="form-group col-3">
@@ -45,7 +45,24 @@
 
                 </div>
 
-        </div>
+        </form>
+
+
+
+
+
+
+        <table class="table">
+            <thead><th>Cupcake top</th><th>Cupcake Bund</th><th>Pris</th></thead>
+            <c:forEach var="cupcake" items="${requestScope.cupcakeList}">
+                <tr>
+                    <td>${cupcake}</td>
+                    <td>${bmiEntry.bmi}</td>
+                    <td>${bmiEntry.height}</td>
+                </tr>
+            </c:forEach>
+
+        </table>
 
 
 
