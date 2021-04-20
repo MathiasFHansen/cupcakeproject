@@ -1,4 +1,6 @@
 package business.services;
+import business.entities.CupcakeBottom;
+import business.entities.CupcakeTop;
 import business.exceptions.UserException;
 import business.persistence.CupcakeMapper;
 import business.persistence.Database;
@@ -8,5 +10,13 @@ public class CupcakeFacade {
     private CupcakeMapper cupcakeMapper;
 
     public CupcakeFacade(Database database) { this.cupcakeMapper = new CupcakeMapper(database); }
+
+    public List<CupcakeTop> getAllCupcakeTops() throws UserException{
+        return cupcakeMapper.getAllCupcakeTops();
+    }
+
+    public List<CupcakeBottom> getAllCupcakeBottoms() throws UserException {
+        return cupcakeMapper.getAllCupcakeBottoms();
+    }
 
 }
