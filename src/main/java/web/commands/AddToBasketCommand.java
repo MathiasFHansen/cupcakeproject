@@ -25,35 +25,25 @@ public class AddToBasketCommand extends CommandProtectedPage {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
 
-//        String topId = (CupcakeTop) request.getParameter("cupcakeTop");
-//        String bottomId = request.getParameter("cupcakeBottom");
-//        int price;
-//
-//        Cupcake cupcake = new Cupcake(topId, bottomId);
-//
-//        List<Cupcake> cupcakeList =
-//
-//        if (cupcake != null) {
-//
-//        }
-//
-//
-//
-        HttpSession session =request.getSession();
+        String cupcakeTop = request.getParameter("cupcakeTop");
+        String cupcakeBottom = request.getParameter("cupcakeBottom");
+        request.setAttribute("cupcakeTop", cupcakeTop);
+        request.setAttribute("cupcakeBottom", cupcakeBottom);
 
-        CupcakeTop cupcakeTop = (CupcakeTop) session.getAttribute("cupcakeTop");
-        CupcakeBottom cupcakeBottom = (CupcakeBottom) session.getAttribute("cupcakeBottom");
-        Cupcake cupcake = new Cupcake(cupcakeTop, cupcakeBottom);
-
-        List<Cupcake> cupcakeList = new ArrayList<>();
-
-
-
-        System.out.println(cupcakeTop.getCupcakeTopId());
+        List<String> cupcakeList = new ArrayList<>();
+        cupcakeList.add(cupcakeTop);
+        cupcakeList.add(cupcakeBottom);
 
 
 
 
-        return "customerpage";
+
+
+
+
+
+
+
+        return pageToShow;
     }
 }

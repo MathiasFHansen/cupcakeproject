@@ -59,4 +59,28 @@ public class CupcakeMapper {
         }
     }
 
+    public String getCupcakeBottomName(int id) throws UserException {
+        String name = null;
+        try (Connection connection = database.connect()) {
+            String sql = "SELECT name FROM cupcake_bund WHERE cupcake_bund_id = ?;";
+            try (PreparedStatement ps = connection.prepareStatement(sql)) {
+
+                ps.setInt(1, id);
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    name = rs.getString("name");
+                    return name;
+                }
+                else {
+                    return name;
+                }
+
+            } catch (SQLException ex) {
+                throw new UserException(ex.getMessage());
+            }
+        } catch (UserException | SQLException ex) {
+            throw new UserException("Connection to database could not be established");
+        }
+    }
+
 }

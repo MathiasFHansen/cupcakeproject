@@ -19,4 +19,7 @@ public class CupcakeFacade {
         return cupcakeMapper.getAllCupcakeBottoms();
     }
 
+    public String getCupcakeBottomName(int id) throws UserException {
+        return cupcakeMapper.getCupcakeBottomName(id);
+    }
 }

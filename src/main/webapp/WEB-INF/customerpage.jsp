@@ -30,7 +30,7 @@
 
                         <select class="form-control" name="cupcakeBottom" id="cupcakeBottom">
                             <c:forEach var="cupcakeBottom" items="${applicationScope.cupcakeBottomList}">
-                                <option value="${cupcakeTop.cupcakeBottomId}">${cupcakeBottom.name}</option>
+                                <option value="${cupcakeBottom.cupcakeBottomId}">${cupcakeBottom.name}</option>
                             </c:forEach>
                         </select>
                     </div>
@@ -56,9 +56,9 @@
             <thead><th>Cupcake top</th><th>Cupcake Bund</th><th>Pris</th></thead>
             <c:forEach var="cupcake" items="${requestScope.cupcakeList}">
                 <tr>
+                    <td>${requestScope.cupcakeTop}</td>
+                    <td>${requestScope.cupcakeBottom}</td>
                     <td>${cupcake}</td>
-                    <td>${bmiEntry.bmi}</td>
-                    <td>${bmiEntry.height}</td>
                 </tr>
             </c:forEach>
 

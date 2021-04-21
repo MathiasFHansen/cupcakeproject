@@ -1,5 +1,14 @@
 package business.entities;
 
+import business.exceptions.UserException;
+import business.persistence.Database;
+import business.services.CupcakeFacade;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class CupcakeBottom {
 
     private int cupcakeBottomId;
@@ -11,6 +20,8 @@ public class CupcakeBottom {
         this.name = name;
     }
 
+
+
     public int getCupcakeBottomId() {
         return cupcakeBottomId;
     }
@@ -19,7 +30,7 @@ public class CupcakeBottom {
         this.cupcakeBottomId = cupcakeBottomId;
     }
 
-    public String getName() {
+    public String getName(){
         return name;
     }
 
