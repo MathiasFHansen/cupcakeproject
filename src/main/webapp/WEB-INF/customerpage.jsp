@@ -12,7 +12,7 @@
     <jsp:body>
         <h1>Hello ${sessionScope.email} </h1>
 
-        <form method="post" action="${pageContext.request.contextPath}/fc/customerpage">
+        <form name="cupcake dropdowns"  action="${pageContext.request.contextPath}/fc/cupcakechoice" method="post">
                 <div class="row">
                     <div class="form-group col-2"></div>
                     <div class="form-group col-3">

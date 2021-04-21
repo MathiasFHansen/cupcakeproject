@@ -11,7 +11,8 @@ public class Cupcake {
         this.cupcakeBottom = cupcakeBottom;
     }
 
-    public int totalprice (){
+    public int totalprice () {
+        int totalprice = cupcakeBottom.getPrice() + cupcakeTop.getPrice();
         return totalprice;
     }
 

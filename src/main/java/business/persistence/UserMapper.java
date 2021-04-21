@@ -1,9 +1,13 @@
 package business.persistence;
 
+import business.entities.CupcakeTop;
+import business.entities.UserEntry;
 import business.exceptions.UserException;
 import business.entities.User;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserMapper
 {
@@ -73,6 +77,76 @@ public class UserMapper
         }
         catch (SQLException ex)
         {
+            throw new UserException("Connection to database could not be established");
+        }
+    }
+
+    public List<UserEntry> getAllUsersByIdRole() throws UserException {
+        List<UserEntry> userEntryList = new ArrayList<>();
+
+        try (Connection connection = database.connect()) {
+            String sql = "SELECT * FROM cupcake.users WHERE ROLE = 'customer';";
+
+            try (PreparedStatement ps = connection.prepareStatement(sql)) {
+
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    String email = rs.getString("email");
+                    int balance = rs.getInt("balance");
+                    userEntryList.add(new UserEntry(id, email, balance));
+                }
+                return userEntryList;
+            } catch (SQLException ex) {
+                throw new UserException(ex.getMessage());
+            }
+        } catch (SQLException ex) {
+            throw new UserException("Connection to database could not be established");
+        }
+    }
+
+//    public UserEntry getUserEntryById(int userEntryId) throws UserException {
+//
+//        try (Connection connection = database.connect()) {
+//            String sql = "SELECT * FROM cupcake.users WHERE id = ?";
+//
+//            try (PreparedStatement ps = connection.prepareStatement(sql)) {
+//
+//                ps.setInt(1, userEntryId);
+//                ResultSet rs = ps.executeQuery();
+//                if (rs.next()) {
+//                    int newId = rs.getInt("id");
+//                    String email = rs.getString("email");
+//                    int balance = rs.getInt("balance");
+//                    return new UserEntry(newId, email, balance);
+//                }
+//                throw new UserException("Sportsgren findes ikke for sport_id = " +userEntryId);
+//
+//            } catch (SQLException ex) {
+//                throw new UserException(ex.getMessage());
+//            }
+//        } catch (SQLException ex) {
+//            throw new UserException("Connection to database could not be established");
+//        }
+//    }
+
+    public int updateBalance(int userEntryId, int balance) throws UserException {
+
+        try (Connection connection = database.connect()) {
+
+            //TODO: Money needs to be added ontop of current balance instead of replacing it. + Exceptionhandling
+            String sql = "UPDATE cupcake.users SET balance = ? WHERE id =?";
+
+            try (PreparedStatement ps = connection.prepareStatement(sql)) {
+
+                ps.setInt(1, balance);
+                ps.setInt(2, userEntryId);
+                int rowsInserted = ps.executeUpdate();
+                return rowsInserted;
+            } catch (SQLException ex) {
+                throw new UserException(ex.getMessage());
+            }
+        } catch (SQLException ex) {
             throw new UserException("Connection to database could not be established");
         }
     }

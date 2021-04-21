@@ -8,6 +8,7 @@ import business.services.CupcakeFacade;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,9 +39,19 @@ public class AddToBasketCommand extends CommandProtectedPage {
 //
 //
 //
-        String cupcake_Bottom = request.getParameter("cupcakeBottom");
+        HttpSession session =request.getSession();
 
-        request.setAttribute("cupcake_Bottom", cupcake_Bottom);
+        CupcakeTop cupcakeTop = (CupcakeTop) session.getAttribute("cupcakeTop");
+        CupcakeBottom cupcakeBottom = (CupcakeBottom) session.getAttribute("cupcakeBottom");
+        Cupcake cupcake = new Cupcake(cupcakeTop, cupcakeBottom);
+
+        List<Cupcake> cupcakeList = new ArrayList<>();
+
+
+
+        System.out.println(cupcakeTop.getCupcakeTopId());
+
+
 
 
         return "customerpage";

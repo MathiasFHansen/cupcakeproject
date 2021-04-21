@@ -1,9 +1,12 @@
 package business.services;
 
 import business.entities.User;
+import business.entities.UserEntry;
 import business.persistence.Database;
 import business.persistence.UserMapper;
 import business.exceptions.UserException;
+
+import java.util.List;
 
 public class UserFacade
 {
@@ -26,4 +29,15 @@ public class UserFacade
         return user;
     }
 
+    public List<UserEntry> getAllUsersByIdRole() throws UserException {
+        return userMapper.getAllUsersByIdRole();
+    }
+
+//    public UserEntry getUserEntryById(int userEntryId) throws UserException {
+//        return userMapper.getUserEntryById(userEntryId);
+//    }
+
+    public int updateBalance(int userEntryId, int balance) throws UserException {
+        return userMapper.updateBalance(userEntryId, balance);
+    }
 }

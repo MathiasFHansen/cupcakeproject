@@ -14,6 +14,15 @@ public class User
     private String email;
     private String password; // Should be hashed and secured
     private String role;
+    private int balance;
+
+    public int getBalance() {
+        return balance;
+    }
+
+    public void setBalance(int balance) {
+        this.balance = balance;
+    }
 
     public String getEmail()
     {
