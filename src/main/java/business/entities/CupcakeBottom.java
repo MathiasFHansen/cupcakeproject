@@ -15,9 +15,11 @@ public class CupcakeBottom {
     private String name;
     private int price;
 
-    public CupcakeBottom(int cupcakeBottomId, String name) {
+    public CupcakeBottom(int cupcakeBottomId, String name, int price) {
         this.cupcakeBottomId = cupcakeBottomId;
         this.name = name;
+        this.price = price;
+
     }
 
 

@@ -1,14 +1,18 @@
 package web;
 
+import business.entities.CupcakeBottom;
+import business.entities.CupcakeTop;
 import business.exceptions.UserException;
 import business.persistence.CupcakeMapper;
 import business.persistence.Database;
 import business.persistence.UserMapper;
+import business.services.CupcakeFacade;
 import business.services.UserFacade;
 import web.commands.*;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -42,11 +46,14 @@ public class FrontController extends HttpServlet
         }
 
         // Initialize whatever global datastructures needed here:
-        CupcakeMapper cupcakeMapper = new CupcakeMapper(database);
+        CupcakeFacade cupcakeFacade = new CupcakeFacade(database);
 
         try {
-            getServletContext().setAttribute("cupcakeTopList", cupcakeMapper.getAllCupcakeTops());
-            getServletContext().setAttribute("cupcakeBottomList", cupcakeMapper.getAllCupcakeBottoms());
+            List<CupcakeTop> cupcakeTopList = cupcakeFacade.getAllCupcakeTops();
+            getServletContext().setAttribute("cupcakeTopList", cupcakeTopList);
+            List<CupcakeBottom> cupcakeBottomList = cupcakeFacade.getAllCupcakeBottoms();
+            getServletContext().setAttribute("cupcakeBottomList", cupcakeBottomList);
+
 
         } catch (UserException ex) {
             Logger.getLogger("web").log(Level.SEVERE, ex.getMessage(), ex);

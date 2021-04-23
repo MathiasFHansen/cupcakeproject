@@ -1,20 +1,19 @@
 package business.entities;
 
-public class Cupcake {
+public class BasketItem {
 
-    CupcakeTop cupcakeTop;
-    CupcakeBottom cupcakeBottom;
-    private int totalprice;
+    private CupcakeTop cupcakeTop;
+    private CupcakeBottom cupcakeBottom;
+    private int quantity;
 
-    public Cupcake(CupcakeTop cupcakeTop, CupcakeBottom cupcakeBottom) {
+    public BasketItem(CupcakeTop cupcakeTop, CupcakeBottom cupcakeBottom, int quantity) {
         this.cupcakeTop = cupcakeTop;
         this.cupcakeBottom = cupcakeBottom;
-
+        this.quantity = quantity;
     }
 
-    public int totalprice() {
-        int totalprice = cupcakeBottom.getPrice() + cupcakeTop.getPrice();
-        return totalprice;
+    public int getPrice(){
+        return (cupcakeTop.getPrice() + cupcakeBottom.getPrice()) * quantity;
     }
 
     public CupcakeTop getCupcakeTop() {
@@ -33,11 +32,11 @@ public class Cupcake {
         this.cupcakeBottom = cupcakeBottom;
     }
 
-    public int getTotalprice() {
-        return totalprice;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public void setTotalprice(int totalprice) {
-        this.totalprice = totalprice;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }

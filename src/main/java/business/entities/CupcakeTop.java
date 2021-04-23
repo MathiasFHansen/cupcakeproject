@@ -5,9 +5,10 @@ public class CupcakeTop {
     private String name;
     private int price;
 
-    public CupcakeTop(int cupcakeId, String name) {
-        this.cupcakeTopId = cupcakeId;
+    public CupcakeTop(int cupcakeTopId, String name, int price) {
+        this.cupcakeTopId = cupcakeTopId;
         this.name = name;
+        this.price = price;
     }
 
     public int getCupcakeTopId() {

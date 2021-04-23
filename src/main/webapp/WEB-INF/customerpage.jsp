@@ -14,55 +14,83 @@
 
         <form name="cupcake dropdowns"  action="${pageContext.request.contextPath}/fc/cupcakechoice" method="post">
                 <div class="row">
-                    <div class="form-group col-2"></div>
-                    <div class="form-group col-3">
+                    <div class="form-group col-4">
                         <label class="form-check-label" for="cupcakeTop">Cupcake Top:</label>
 
                         <select class="form-control" name="cupcakeTop" id="cupcakeTop">
                             <c:forEach var="cupcakeTop" items="${applicationScope.cupcakeTopList}">
-                                <option value="${cupcakeTop.cupcakeTopId}">${cupcakeTop.name}</option>
+                                <option value="${cupcakeTop.cupcakeTopId}">${cupcakeTop.name} (${cupcakeTop.price} kr.)</option>
                             </c:forEach>
                         </select>
                     </div>
-                    <div class="form-group col-2"></div>
-                    <div class="form-group col-3">
-                        <label class="form-check-label" for="cupcakeTop">Cupcake Bund:</label>
+
+                    <div class="form-group col-4">
+                        <label class="form-check-label" for="cupcakeBottom">Cupcake Bund:</label>
 
                         <select class="form-control" name="cupcakeBottom" id="cupcakeBottom">
                             <c:forEach var="cupcakeBottom" items="${applicationScope.cupcakeBottomList}">
-                                <option value="${cupcakeBottom.cupcakeBottomId}">${cupcakeBottom.name}</option>
+                                <option value="${cupcakeBottom.cupcakeBottomId}">${cupcakeBottom.name} (${cupcakeBottom.price} kr.)</option>
                             </c:forEach>
                         </select>
                     </div>
-                    <div class="form-group col-2"></div>
+
+                    <div class="form-group col-4">
+                        <label class="form-check-label" for="quantity">quantity:</label>
+
+                        <select class="form-control" name="quantity" id="quantity">
+                            <c:forEach var="quantity" begin="1" end="5">
+                                <option value="${quantity}">${quantity} stk</option>
+                            </c:forEach>
+                        </select>
+                    </div>
                 </div>
 
                 <div class="row mt-2">
                     <div class="form-group col-9"></div>
                     <div class="form-group col-3">
-                        <button class="btn btn-primary btn-sm" type="submit" name="add to basket" value="">Tilføj til kurv</button>
+                        <button class="btn btn-primary btn-sm" type="submit" name="add to basket">Tilføj til kurv</button>
                     </div>
 
                 </div>
 
+            <br/>
+            <br/>
+
+
+
         </form>
 
-
-
-
-
-
-        <table class="table">
-            <thead><th>Cupcake top</th><th>Cupcake Bund</th><th>Pris</th></thead>
-            <c:forEach var="cupcake" items="${requestScope.cupcakeList}">
+        <form>
+            <h3>Din indkøbskurv: //TODO: Fix Refresh bug</h3>
+            <table class="table table-striped">
+                <thead>
                 <tr>
-                    <td>${requestScope.cupcakeTop}</td>
-                    <td>${requestScope.cupcakeBottom}</td>
-                    <td>${cupcake}</td>
+                    <td>Antal</td>
+                    <td>Top</td>
+                    <td>Bund</td>
+                    <td>Pris</td>
                 </tr>
-            </c:forEach>
+                </thead>
 
-        </table>
+                <c:forEach var="basketItem" items="${sessionScope.basket.basketItemList}">
+                    <tr>
+                        <td>${basketItem.quantity}</td>
+                        <td>${basketItem.cupcakeTop.name}</td>
+                        <td>${basketItem.cupcakeBottom.name}</td>
+                        <td>${basketItem.price}</td>
+                    </tr>
+                </c:forEach>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td>Pris i alt:</td>
+                    <td>${sessionScope.basket.totalSum()}</td>
+                </tr>
+            </table>
+
+
+
+        </form>
 
 
 

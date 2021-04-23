@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import business.entities.CupcakeBottom;
+import business.entities.CupcakeBottomEntry;
 import business.entities.CupcakeTop;
+import business.entities.CupcakeTopEntry;
 import business.exceptions.UserException;
 
 public class CupcakeMapper {
@@ -25,7 +27,8 @@ public class CupcakeMapper {
                 while (rs.next()) {
                     int id = rs.getInt("cupcake_top_id");
                     String name = rs.getString("name");
-                    cupcakeTopList.add(new CupcakeTop(id, name));
+                    int price = rs.getInt("price");
+                    cupcakeTopList.add(new CupcakeTop(id, name, price));
                 }
                 return cupcakeTopList;
             } catch (SQLException ex) {
@@ -48,7 +51,8 @@ public class CupcakeMapper {
                 while (rs.next()) {
                     int id = rs.getInt("cupcake_bund_id");
                     String name = rs.getString("name");
-                    cupcakeBottomList.add(new CupcakeBottom(id, name));
+                    int price = rs.getInt("price");
+                    cupcakeBottomList.add(new CupcakeBottom(id, name, price));
                 }
                 return cupcakeBottomList;
             } catch (SQLException ex) {
@@ -79,6 +83,54 @@ public class CupcakeMapper {
                 throw new UserException(ex.getMessage());
             }
         } catch (UserException | SQLException ex) {
+            throw new UserException("Connection to database could not be established");
+        }
+    }
+
+    public CupcakeBottomEntry getCupcakeBottomEntry(int id) throws UserException {
+
+        try (Connection connection = database.connect()) {
+            String sql = "SELECT * FROM cupcake_bund WHERE id =?";
+
+            try (PreparedStatement ps = connection.prepareStatement(sql)) {
+
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    id = rs.getInt("cupcake_bund_id");
+                    String name = rs.getString("name");
+                    int price = rs.getInt("price");
+                    return (new CupcakeBottomEntry(id, name, price));
+                } else {
+                    return null;
+                }
+            } catch (SQLException ex) {
+                throw new UserException(ex.getMessage());
+            }
+        } catch (SQLException ex) {
+            throw new UserException("Connection to database could not be established");
+        }
+    }
+
+    public CupcakeTopEntry getCupcakeTopEntry(int id) throws UserException {
+
+        try (Connection connection = database.connect()) {
+            String sql = "SELECT * FROM cupcake_top WHERE id=?";
+
+            try (PreparedStatement ps = connection.prepareStatement(sql)) {
+
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    id = rs.getInt("cupcake_top_id");
+                    String name = rs.getString("name");
+                    int price = rs.getInt("price");
+                    return (new CupcakeTopEntry(id, name, price));
+                } else {
+                    return null;
+                }
+            } catch (SQLException ex) {
+                throw new UserException(ex.getMessage());
+            }
+        } catch (SQLException ex) {
             throw new UserException("Connection to database could not be established");
         }
     }
