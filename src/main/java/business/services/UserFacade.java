@@ -24,7 +24,7 @@ public class UserFacade
 
     public User createUser(String email, String password) throws UserException
     {
-        User user = new User(email, password, "customer");
+        User user = new User(email, password, "customer", 0);
         userMapper.createUser(user);
         return user;
     }
@@ -39,5 +39,9 @@ public class UserFacade
 
     public int updateBalance(int userEntryId, int balance) throws UserException {
         return userMapper.updateBalance(userEntryId, balance);
+    }
+
+    public int getUserBalance(int id) throws UserException {
+        return userMapper.getUserBalance(id);
     }
 }

@@ -6,6 +6,7 @@ import business.services.UserFacade;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class UpdateBalanceCommand extends CommandProtectedPage{
 
@@ -18,17 +19,23 @@ public class UpdateBalanceCommand extends CommandProtectedPage{
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws UserException {
 
-        String update = request.getParameter("update");
-        //UserEntry userEntry = userFacade.getUserEntryById()
-        //request.setAttribute("userID", );
+        int userEntryId = Integer.parseInt(request.getParameter("id"));
+        int addBalance = Integer.parseInt(request.getParameter("addBalance"));
+        int currentBalance = userFacade.getUserBalance(userEntryId);
 
-        String userEntryId = (request.getParameter("id"));
-        String balance = (request.getParameter("balance"));
-        int rowsInserted = userFacade.updateBalance(Integer.parseInt(userEntryId), Integer.parseInt(balance));
-        if (rowsInserted == 1)
-        {
-            request.setAttribute("userEntryList", userFacade.getAllUsersByIdRole());
+        int newBalance = currentBalance+addBalance;
 
+
+        if (addBalance > 0) {
+            int rowsInserted = userFacade.updateBalance(userEntryId, newBalance);
+            if (rowsInserted == 1) {
+                request.setAttribute("userEntryList", userFacade.getAllUsersByIdRole());
+            }
+        } else if (addBalance < 0) {
+            throw new UserException("Du kan ikke indsætte negative værdier på balancen");
+        }
+        else if (addBalance == 0){
+            throw new UserException("Du kan ikke indsætte 0 til balancen");
         }
 
         return pageToShow;

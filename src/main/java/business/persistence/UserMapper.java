@@ -51,7 +51,7 @@ public class UserMapper
     {
         try (Connection connection = database.connect())
         {
-            String sql = "SELECT id, role FROM users WHERE email=? AND password=?";
+            String sql = "SELECT id, role, balance FROM users WHERE email=? AND password=?";
 
             try (PreparedStatement ps = connection.prepareStatement(sql))
             {
@@ -62,7 +62,8 @@ public class UserMapper
                 {
                     String role = rs.getString("role");
                     int id = rs.getInt("id");
-                    User user = new User(email, password, role);
+                    int balance = rs.getInt("balance");
+                    User user = new User(email, password, role, balance);
                     user.setId(id);
                     return user;
                 } else
@@ -151,4 +152,24 @@ public class UserMapper
         }
     }
 
+    public int getUserBalance(int id) throws UserException {
+        try (Connection connection = database.connect()) {
+            String sql = "SELECT * FROM cupcake.users WHERE id = ?";
+
+            try (PreparedStatement ps = connection.prepareStatement(sql)) {
+
+                ps.setInt(1, id);
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    int balance = rs.getInt("balance");
+                    return balance;
+                }
+                return 0;
+            } catch (SQLException ex) {
+                throw new UserException(ex.getMessage());
+            }
+        } catch (SQLException | UserException ex) {
+            throw new UserException("Connection to database could not be established");
+        }
+    }
 }

@@ -44,8 +44,8 @@
                     <input id="id" class="form-control" name="id" value="${requestScope.userEntryId}" placeholder="Enter id of user">
                 </div>
                 <div class="form-group col-3">
-                    <label class="col-sm-1 col-form-label" for="balance">Balance</label>
-                    <input id="balance" class="form-control" name="balance" placeholder="Enter money to deposit for user">
+                    <label class="col-sm-1 col-form-label" for="addBalance">Balance</label>
+                    <input id="addBalance" class="form-control" name="addBalance" placeholder="Enter money to deposit for user">
                 </div>
                 <div class="form-group col-3"></div>
             </div>
