@@ -31,6 +31,7 @@ public abstract class Command
         commands.put("cupcakechoice", new AddToBasketCommand("customerpage", "customer"));
         commands.put("editcustomer", new GetUserTableFromDatabaseCommand("editcustomerbalancepage", "employee"));
         commands.put("editcustomer2", new UpdateBalanceCommand("editcustomerbalancepage", "employee"));
+        commands.put("paymentpage", new PaymentCommand("paymentpage", "customer"));
     }
 
     public static Command fromPath(

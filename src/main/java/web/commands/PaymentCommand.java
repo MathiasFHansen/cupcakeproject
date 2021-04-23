@@ -1,5 +1,7 @@
 package web.commands;
 
+import business.entities.Basket;
+import business.entities.BasketItem;
 import business.entities.User;
 import business.exceptions.UserException;
 import business.services.CupcakeFacade;
@@ -25,17 +27,24 @@ public class PaymentCommand extends CommandProtectedPage{
 
         User user = (User) session.getAttribute("user");
 
+        Basket basket = (Basket) session.getAttribute("basket");
 
+        int price = basket.totalSum();
+        int currentBalance = user.getBalance();
 
-        int rowsInserted = userFacade.updateBalance(user.getId(), 100);
-        if (rowsInserted == 1)
-        {
-            request.setAttribute("userEntryList", userFacade.getAllUsersByIdRole());
-
+        if (price <= currentBalance) {
+            int newBalance = currentBalance-price;
+            user.setBalance(newBalance);
+            int rowsInserted = userFacade.updateBalance(user.getId(), newBalance);
+            if (rowsInserted == 1) {
+                request.setAttribute("userEntryList", userFacade.getAllUsersByIdRole());
+            }
+            else if (price > currentBalance){
+                throw new UserException("Brugeren har ikke råd til at købe denne ordre");
+            }
         }
 
-
-
+        //basket.getBasketItemList().clear();
 
         return pageToShow;
     }

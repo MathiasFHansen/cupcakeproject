@@ -12,7 +12,7 @@
     <jsp:body>
         <h1>Hello ${sessionScope.email} </h1>
 
-        <h3>Det her er din nuværende balance på din konto: ${sessionScope.balance} kr.</h3>
+        <h3>Det her er din nuværende balance på din konto: ${sessionScope.user.balance} kr.</h3>
 
         <form name="cupcake dropdowns"  action="${pageContext.request.contextPath}/fc/cupcakechoice" method="post">
                 <div class="row">
@@ -62,7 +62,7 @@
 
         </form>
 
-        <form name="Send to payment" action="${pageContext.request.contextPath}/fc/PaymentPage">
+        <form name="Send to payment" action="${pageContext.request.contextPath}/fc/paymentpage">
 
             <h3>Din indkøbskurv: //TODO: Fix Refresh bug</h3>
             <table class="table table-striped">
@@ -94,7 +94,7 @@
             <div class="row mt-2">
                 <div class="form-group col-9"></div>
                 <div class="form-group col-3">
-                    <button class="btn btn-primary btn-sm" type="submit" name="add to basket">Tilføj til kurv</button>
+                    <button class="btn btn-primary btn-sm" type="submit" name="add to basket">Betal</button>
                 </div>
 
             </div>

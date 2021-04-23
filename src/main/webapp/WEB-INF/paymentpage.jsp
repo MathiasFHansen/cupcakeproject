@@ -38,7 +38,7 @@
             </tr>
         </table>
 
-        <h2>Du har følgende beløb tilbage på din konto: ${sessionScope.balance} </h2>
+        <h2>Du har følgende beløb tilbage på din konto: ${sessionScope.user.balance} </h2>
 
     </jsp:body>
 

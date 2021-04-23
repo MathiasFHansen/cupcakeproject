@@ -28,4 +28,8 @@ public class Basket {
         }
         return sum;
     }
+
+    public void setBasketItemList(List<BasketItem> basketItemList) {
+        this.basketItemList = basketItemList;
+    }
 }
