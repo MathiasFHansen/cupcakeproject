@@ -3,11 +3,13 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import business.entities.CupcakeBottom;
-import business.entities.CupcakeBottomEntry;
-import business.entities.CupcakeTop;
-import business.entities.CupcakeTopEntry;
+import business.entities.*;
 import business.exceptions.UserException;
+import business.services.UserFacade;
+import com.mysql.cj.AbstractQuery;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 public class CupcakeMapper {
     private Database database;
@@ -87,22 +89,53 @@ public class CupcakeMapper {
         }
     }
 
-    public CupcakeBottomEntry getCupcakeBottomEntry(int id) throws UserException {
+
+
+    public void createOrder (Order order) throws UserException {
+        try (Connection connection = database.connect())
+        {
+            String sql = "INSERT INTO `cupcake`.`orderline` (`quantity`, `cupcake_bund_id`, `cupcake_top_id`, `user_id`) VALUES (?, ?, ?, ?);";
+
+            try (PreparedStatement ps = connection.prepareStatement(sql))
+            {
+                for (BasketItem b: order.getBasket().getBasketItemList()) {
+                    ps.setInt(1, b.getQuantity());
+                    ps.setInt(2, b.getCupcakeBottom().getCupcakeBottomId());
+                    ps.setInt(3, b.getCupcakeTop().getCupcakeTopId());
+                    ps.setInt(4, order.getId());
+                    ps.executeUpdate();
+                }
+            }
+            catch (SQLException ex)
+            {
+                throw new UserException(ex.getMessage());
+            }
+        }
+        catch (SQLException | UserException ex)
+        {
+            throw new UserException(ex.getMessage());
+        }
+    }
+
+    public List<OrderLine> getAllOrdersFromDatabase(int id) throws UserException {
+        List<OrderLine> orderList = new ArrayList<>();
 
         try (Connection connection = database.connect()) {
-            String sql = "SELECT * FROM cupcake_bund WHERE id =?";
+            String sql = "SELECT * FROM cupcake.orderline WHERE user_id =?";
 
             try (PreparedStatement ps = connection.prepareStatement(sql)) {
 
+                ps.setInt(1, id);
                 ResultSet rs = ps.executeQuery();
-                if (rs.next()) {
-                    id = rs.getInt("cupcake_bund_id");
-                    String name = rs.getString("name");
-                    int price = rs.getInt("price");
-                    return (new CupcakeBottomEntry(id, name, price));
-                } else {
-                    return null;
+                while (rs.next()) {
+                    int orderlineId = rs.getInt("cupcake_bund_id");
+                    int quantity = rs.getInt("quantity");
+                    int cupcakeBottomId = rs.getInt("cupcake_bund_id");
+                    int cupcakeTopId = rs.getInt("cupcake_top_id");
+                    int userId = rs.getInt("user_id");
+                    orderList.add(new OrderLine(orderlineId, quantity, cupcakeBottomId, cupcakeTopId, userId));
                 }
+                return orderList;
             } catch (SQLException ex) {
                 throw new UserException(ex.getMessage());
             }
@@ -110,29 +143,4 @@ public class CupcakeMapper {
             throw new UserException("Connection to database could not be established");
         }
     }
-
-    public CupcakeTopEntry getCupcakeTopEntry(int id) throws UserException {
-
-        try (Connection connection = database.connect()) {
-            String sql = "SELECT * FROM cupcake_top WHERE id=?";
-
-            try (PreparedStatement ps = connection.prepareStatement(sql)) {
-
-                ResultSet rs = ps.executeQuery();
-                if (rs.next()) {
-                    id = rs.getInt("cupcake_top_id");
-                    String name = rs.getString("name");
-                    int price = rs.getInt("price");
-                    return (new CupcakeTopEntry(id, name, price));
-                } else {
-                    return null;
-                }
-            } catch (SQLException ex) {
-                throw new UserException(ex.getMessage());
-            }
-        } catch (SQLException ex) {
-            throw new UserException("Connection to database could not be established");
-        }
-    }
-
 }

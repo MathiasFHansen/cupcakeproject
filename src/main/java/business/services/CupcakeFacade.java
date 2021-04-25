@@ -1,8 +1,5 @@
 package business.services;
-import business.entities.CupcakeBottom;
-import business.entities.CupcakeBottomEntry;
-import business.entities.CupcakeTop;
-import business.entities.CupcakeTopEntry;
+import business.entities.*;
 import business.exceptions.UserException;
 import business.persistence.CupcakeMapper;
 import business.persistence.Database;
@@ -25,11 +22,11 @@ public class CupcakeFacade {
         return cupcakeMapper.getCupcakeBottomName(id);
     }
 
-    public CupcakeBottomEntry getCupcakeBottomEntry(int id) throws UserException {
-        return cupcakeMapper.getCupcakeBottomEntry(id);
+    public Order createOrder (Order order) throws UserException {
+        return order;
     }
 
-    public CupcakeTopEntry getCupcakeTopEntry(int id) throws UserException {
-        return cupcakeMapper.getCupcakeTopEntry(id);
+    public List<OrderLine> getAllOrdersFromDatabase(int id) throws UserException {
+        return cupcakeMapper.getAllOrdersFromDatabase(id);
     }
 }

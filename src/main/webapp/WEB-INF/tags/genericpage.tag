@@ -27,7 +27,7 @@
 -->
 <header class="d-flex flex-column flex-md-row align-items-center p-3 pb-0 px-md-4 mb-4 bg-white border-bottom shadow-sm">
     <div class="h5 my-0 me-md-auto fw-normal">
-        <p>Demo Project for DAT 2. semester</p>
+
         <p style="font-size: larger">
             <jsp:invoke fragment="header"/>
         </p>
@@ -36,7 +36,9 @@
         <c:if test="${addHomeLink == null }">
             <a class="p-2 text-dark" href="<%=request.getContextPath()%>">Home</a>
         </c:if>
-        <a class="p-2 text-dark" href="#">Orders</a>
+        <c:if test="${addOrderLink == null }">
+            <a class="p-2 text-dark" href="<${pageContext.request.contextPath}/fc/orderline>">Orders</a>
+        </c:if>
         <a class="p-2 text-dark" href="#">Profile</a>
         <a class="p-2 text-dark" href="#">About</a>
     </nav>

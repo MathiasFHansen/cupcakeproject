@@ -51,7 +51,7 @@ public class UserMapper
     {
         try (Connection connection = database.connect())
         {
-            String sql = "SELECT id, role, balance FROM users WHERE email=? AND password=?";
+            String sql = "SELECT user_id, role, balance FROM users WHERE email=? AND password=?";
 
             try (PreparedStatement ps = connection.prepareStatement(sql))
             {
@@ -61,7 +61,7 @@ public class UserMapper
                 if (rs.next())
                 {
                     String role = rs.getString("role");
-                    int id = rs.getInt("id");
+                    int id = rs.getInt("user_id");
                     int balance = rs.getInt("balance");
                     User user = new User(email, password, role, balance);
                     user.setId(id);
@@ -92,7 +92,7 @@ public class UserMapper
 
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
-                    int id = rs.getInt("id");
+                    int id = rs.getInt("user_id");
                     String email = rs.getString("email");
                     int balance = rs.getInt("balance");
                     userEntryList.add(new UserEntry(id, email, balance));
@@ -136,7 +136,7 @@ public class UserMapper
         try (Connection connection = database.connect()) {
 
             //TODO: Money needs to be added ontop of current balance instead of replacing it. + Exceptionhandling
-            String sql = "UPDATE cupcake.users SET balance = ? WHERE id =?";
+            String sql = "UPDATE cupcake.users SET balance = ? WHERE user_id =?";
 
             try (PreparedStatement ps = connection.prepareStatement(sql)) {
 
@@ -154,7 +154,7 @@ public class UserMapper
 
     public int getUserBalance(int id) throws UserException {
         try (Connection connection = database.connect()) {
-            String sql = "SELECT * FROM cupcake.users WHERE id = ?";
+            String sql = "SELECT * FROM cupcake.users WHERE user_id = ?";
 
             try (PreparedStatement ps = connection.prepareStatement(sql)) {
 
@@ -163,6 +163,27 @@ public class UserMapper
                 if (rs.next()) {
                     int balance = rs.getInt("balance");
                     return balance;
+                }
+                return 0;
+            } catch (SQLException ex) {
+                throw new UserException(ex.getMessage());
+            }
+        } catch (SQLException | UserException ex) {
+            throw new UserException("Connection to database could not be established");
+        }
+    }
+
+    public int getUserFromId(String email) throws UserException {
+        try (Connection connection = database.connect()) {
+            String sql = "SELECT user_id FROM cupcake.users WHERE email = ?";
+
+            try (PreparedStatement ps = connection.prepareStatement(sql)) {
+
+                ps.setString(1, email);
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    int id = rs.getInt("user_id");
+                    return id;
                 }
                 return 0;
             } catch (SQLException ex) {

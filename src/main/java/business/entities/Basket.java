@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Basket {
+
     private List<BasketItem> basketItemList = new ArrayList<>();
 
     public Basket() {
@@ -32,4 +33,6 @@ public class Basket {
     public void setBasketItemList(List<BasketItem> basketItemList) {
         this.basketItemList = basketItemList;
     }
+
+
 }

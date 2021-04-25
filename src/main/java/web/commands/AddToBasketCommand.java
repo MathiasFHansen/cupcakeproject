@@ -56,6 +56,8 @@ public class AddToBasketCommand extends CommandProtectedPage {
         CupcakeBottom cupcakeBottom = getCupcakeBottomItemFromId(cupcakeBottomList, cupcakeBottomId);
         BasketItem basketItem = new BasketItem(cupcakeTop, cupcakeBottom, quantity);
 
+
+
         basket.addToBasket(basketItem);
 
         session.setAttribute("basket", basket);

@@ -1,5 +1,6 @@
 package business.services;
 
+import business.entities.Order;
 import business.entities.User;
 import business.entities.UserEntry;
 import business.persistence.Database;
@@ -44,4 +45,10 @@ public class UserFacade
     public int getUserBalance(int id) throws UserException {
         return userMapper.getUserBalance(id);
     }
+
+    public int getUserFromId(String email) throws UserException {
+        return userMapper.getUserFromId(email);
+    }
+
+
 }
